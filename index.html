@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Telegram Mini Apps Vanilla JS Sample App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js?57"></script>
     <style>
         body {
             font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
@@ -83,19 +83,70 @@
 </head>
 
 <body>
-    <main>
-        <h1>Hello World</h1>
-
-    </main>
-    <div id="viewport"></div>
-    <div id="viewport-params-size"></div>
-    <div id="viewport-params-expand"></div>
     <script>
         // Initialize the WebApp
         Telegram.WebApp.ready();
 
 
+
+        const DeviceStorage = Telegram.WebApp.DeviceStorage;
+        function storage() {
+            // Store a value
+            DeviceStorage.setItem("username", "luca_ferrari", function (err, success) {
+                if (err) {
+                    console.error("Error storing item:", err);
+                } else if (success) {
+                    alert("Item stored successfully!");
+                }
+            });
+        }
+
+
+        function getItem() {
+            // Retrieve a value
+            DeviceStorage.getItem("username", function (err, value) {
+                if (err) {
+                    console.error("Error retrieving item:", err);
+                } else {
+                    alert("Retrieved username:", value);
+                }
+            });
+        }
+
+        function remove() {
+            // Remove a value
+            DeviceStorage.removeItem("username", function (err, success) {
+                if (err) {
+                    console.error("Error removing item:", err);
+                } else if (success) {
+                    alert("Item removed successfully!");
+                }
+            });
+        }
+
+        function removeAll() {
+            // Clear all stored data
+            DeviceStorage.clear(function (err, success) {
+                if (err) {
+                    console.error("Error clearing storage:", err);
+                } else if (success) {
+                    alert("All items cleared successfully!");
+                }
+            });
+        }
     </script>
+    <main>
+        <h1>Hello World</h1>
+        <button onclick="storage()">Store Data</button> <br>
+        <button onclick="remove()">Remove Data</button> <br>
+        <button onclick="getItem()">Get Data</button> <br>
+        <button onclick="sendToMiniApp()">Remove All</button>
+
+    </main>
+    <div id="viewport"></div>
+    <div id="viewport-params-size"></div>
+    <div id="viewport-params-expand"></div>
+
 
     <!-- Eruda is console for mobile browsers -->
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
